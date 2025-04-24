@@ -751,11 +751,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334813428}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &376171652 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
-  m_PrefabInstance: {fileID: 1476899952}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &387606094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,7 +1034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bowl: {fileID: 615607490}
   TargetObjectToClone: {fileID: 2064878334}
-  PlayerCamera: {fileID: 376171652}
+  PlayerCamera: {fileID: 1476899953}
   UI_Controller: {fileID: 1768256615}
 --- !u!65 &558234908
 BoxCollider:
@@ -2153,6 +2148,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+--- !u!4 &1476899953 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+  m_PrefabInstance: {fileID: 1476899952}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1651757955
 GameObject:
   m_ObjectHideFlags: 0
