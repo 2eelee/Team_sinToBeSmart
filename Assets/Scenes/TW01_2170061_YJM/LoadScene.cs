@@ -9,6 +9,6 @@ public class LoadScene : MonoBehaviour
     public void OnClick_LoadScene(Object SceneObject)
     {
         Debug.Log("touch");
-        SceneManager.LoadScene(SceneObject.name);
+        SceneManager.LoadScene(SceneObject.name, LoadSceneMode.Single);
     }
 }
