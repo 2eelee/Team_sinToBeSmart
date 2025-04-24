@@ -4,5 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/TW01_2170061_YJM/TW01_2170061_YJM.unity
+    guid: 4cc3c1bfb367af543a48b46a0460c682
+  - enabled: 1
+    path: Assets/Scenes/TW01_2144026_CHE/D13_2144026_CHE.unity
+    guid: 5f95e849ecdab9f46b42e94af0b43f2f
+  - enabled: 1
+    path: Assets/Scenes/TW01_2171020_SYJ/SYJ_TW.unity
+    guid: cef71282d0cb9784e85414393661be87
+  - enabled: 1
+    path: Assets/Scenes/TW01_2271041_YHS/TW01_2271041_YHS.unity
+    guid: e8a9194ef49ee6b4a832ff72c4e2b15f
+  - enabled: 1
+    path: Assets/Scenes/TW01_Collab Scene.unity
+    guid: f9c1de186e33b0047bef93e22a7e0c1c
   m_configObjects: {}
