@@ -6,6 +6,7 @@ using TMPro;
 public class UI_Controller : MonoBehaviour
 {
     public TMP_Text PickCounts;
+    public TMP_Text PutCounts;
 
     public void Display_PickCounts(int count)
     {
@@ -23,4 +24,11 @@ public class UI_Controller : MonoBehaviour
         int pickCounts = int.Parse(PickCounts.text);
         return pickCounts;
     }
+
+    public void Display_PutCounts()
+    {
+        int currentPut = int.Parse(PutCounts.text);
+        PutCounts.text = (currentPut + 1).ToString();
+    }
+
 }
