@@ -158,7 +158,7 @@ namespace TMPro.Examples
                     // We do this to make sure this character is rendered last and over other characters.
                     meshInfo.SwapVertexData(vertexIndex, lastVertexIndex);
 
-                    // Need to update the appropriate 
+                    // Need to update the appropriate
                     m_TextMeshPro.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
                 }
                 #endregion
@@ -286,7 +286,7 @@ namespace TMPro.Examples
                     m_lastIndex = -1;
                 }
             }
-            
+
         }
 
 
@@ -457,48 +457,37 @@ namespace TMPro.Examples
         {
             if (index == -1 || index > m_TextMeshPro.textInfo.characterCount - 1) return;
 
-            // Get the index of the material / sub text object used by this character.
             int materialIndex = m_TextMeshPro.textInfo.characterInfo[index].materialReferenceIndex;
-
-            // Get the index of the first vertex of the selected character.
             int vertexIndex = m_TextMeshPro.textInfo.characterInfo[index].vertexIndex;
 
-            // Restore Vertices
-            // Get a reference to the cached / original vertices.
             Vector3[] src_vertices = m_cachedMeshInfoVertexData[materialIndex].vertices;
-
-            // Get a reference to the vertices that we need to replace.
             Vector3[] dst_vertices = m_TextMeshPro.textInfo.meshInfo[materialIndex].vertices;
 
-            // Restore / Copy vertices from source to destination
             dst_vertices[vertexIndex + 0] = src_vertices[vertexIndex + 0];
             dst_vertices[vertexIndex + 1] = src_vertices[vertexIndex + 1];
             dst_vertices[vertexIndex + 2] = src_vertices[vertexIndex + 2];
             dst_vertices[vertexIndex + 3] = src_vertices[vertexIndex + 3];
 
-            // Restore Vertex Colors
-            // Get a reference to the vertex colors we need to replace.
             Color32[] dst_colors = m_TextMeshPro.textInfo.meshInfo[materialIndex].colors32;
-
-            // Get a reference to the cached / original vertex colors.
             Color32[] src_colors = m_cachedMeshInfoVertexData[materialIndex].colors32;
 
-            // Copy the vertex colors from source to destination.
             dst_colors[vertexIndex + 0] = src_colors[vertexIndex + 0];
             dst_colors[vertexIndex + 1] = src_colors[vertexIndex + 1];
             dst_colors[vertexIndex + 2] = src_colors[vertexIndex + 2];
             dst_colors[vertexIndex + 3] = src_colors[vertexIndex + 3];
 
-            // Restore UV0S
-            // UVS0
-            Vector2[] src_uv0s = m_cachedMeshInfoVertexData[materialIndex].uvs0;
+            Vector2[] src_uv0s_vec2 = m_cachedMeshInfoVertexData[materialIndex].uvs0;
+            Vector4[] src_uv0s = new Vector4[src_uv0s_vec2.Length];
+            for (int i = 0; i < src_uv0s_vec2.Length; i++)
+                src_uv0s[i] = new Vector4(src_uv0s_vec2[i].x, src_uv0s_vec2[i].y, 0, 0);
+
             Vector2[] dst_uv0s = m_TextMeshPro.textInfo.meshInfo[materialIndex].uvs0;
             dst_uv0s[vertexIndex + 0] = src_uv0s[vertexIndex + 0];
             dst_uv0s[vertexIndex + 1] = src_uv0s[vertexIndex + 1];
             dst_uv0s[vertexIndex + 2] = src_uv0s[vertexIndex + 2];
-            dst_uv0s[vertexIndex + 3] = src_uv0s[vertexIndex + 3];
+            dst_uv0s[vertexIndex + 3] = src_uv0s[vertexIndex + 3];  
 
-            // UVS2
+
             Vector2[] src_uv2s = m_cachedMeshInfoVertexData[materialIndex].uvs2;
             Vector2[] dst_uv2s = m_TextMeshPro.textInfo.meshInfo[materialIndex].uvs2;
             dst_uv2s[vertexIndex + 0] = src_uv2s[vertexIndex + 0];
@@ -506,42 +495,30 @@ namespace TMPro.Examples
             dst_uv2s[vertexIndex + 2] = src_uv2s[vertexIndex + 2];
             dst_uv2s[vertexIndex + 3] = src_uv2s[vertexIndex + 3];
 
-
-            // Restore last vertex attribute as we swapped it as well
             int lastIndex = (src_vertices.Length / 4 - 1) * 4;
 
-            // Vertices
             dst_vertices[lastIndex + 0] = src_vertices[lastIndex + 0];
             dst_vertices[lastIndex + 1] = src_vertices[lastIndex + 1];
             dst_vertices[lastIndex + 2] = src_vertices[lastIndex + 2];
             dst_vertices[lastIndex + 3] = src_vertices[lastIndex + 3];
 
-            // Vertex Colors
-            src_colors = m_cachedMeshInfoVertexData[materialIndex].colors32;
-            dst_colors = m_TextMeshPro.textInfo.meshInfo[materialIndex].colors32;
             dst_colors[lastIndex + 0] = src_colors[lastIndex + 0];
             dst_colors[lastIndex + 1] = src_colors[lastIndex + 1];
             dst_colors[lastIndex + 2] = src_colors[lastIndex + 2];
             dst_colors[lastIndex + 3] = src_colors[lastIndex + 3];
 
-            // UVS0
-            src_uv0s = m_cachedMeshInfoVertexData[materialIndex].uvs0;
-            dst_uv0s = m_TextMeshPro.textInfo.meshInfo[materialIndex].uvs0;
             dst_uv0s[lastIndex + 0] = src_uv0s[lastIndex + 0];
             dst_uv0s[lastIndex + 1] = src_uv0s[lastIndex + 1];
             dst_uv0s[lastIndex + 2] = src_uv0s[lastIndex + 2];
             dst_uv0s[lastIndex + 3] = src_uv0s[lastIndex + 3];
 
-            // UVS2
-            src_uv2s = m_cachedMeshInfoVertexData[materialIndex].uvs2;
-            dst_uv2s = m_TextMeshPro.textInfo.meshInfo[materialIndex].uvs2;
             dst_uv2s[lastIndex + 0] = src_uv2s[lastIndex + 0];
             dst_uv2s[lastIndex + 1] = src_uv2s[lastIndex + 1];
             dst_uv2s[lastIndex + 2] = src_uv2s[lastIndex + 2];
             dst_uv2s[lastIndex + 3] = src_uv2s[lastIndex + 3];
 
-            // Need to update the appropriate 
             m_TextMeshPro.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
         }
+
     }
 }

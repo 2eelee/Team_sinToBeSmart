@@ -48,7 +48,7 @@ namespace TMPro.Examples
 
         void Start()
         {
-            if (SpawnType == 0)
+             if (SpawnType == 0)
             {
                 // TextMesh Pro Implementation
                 m_textMeshPro = m_floatingText.AddComponent<TextMeshPro>();
@@ -57,15 +57,13 @@ namespace TMPro.Examples
                 m_floatingText_Transform = m_floatingText.transform;
                 m_floatingText_Transform.position = m_transform.position + new Vector3(0, 15f, 0);
 
-                //m_textMeshPro.fontAsset = Resources.Load("Fonts & Materials/JOKERMAN SDF", typeof(TextMeshProFont)) as TextMeshProFont; // User should only provide a string to the resource.
-                //m_textMeshPro.fontSharedMaterial = Resources.Load("Fonts & Materials/LiberationSans SDF", typeof(Material)) as Material;
-
                 m_textMeshPro.alignment = TextAlignmentOptions.Center;
                 m_textMeshPro.color = new Color32((byte)Random.Range(0, 255), (byte)Random.Range(0, 255), (byte)Random.Range(0, 255), 255);
                 m_textMeshPro.fontSize = 24;
-                //m_textMeshPro.enableExtraPadding = true;
-                //m_textMeshPro.enableShadows = false;
-                m_textMeshPro.enableKerning = false;
+
+                // ❌ 제거: 이 줄이 오류의 원인입니다.
+                // m_textMeshPro.fontFeatures.Clear();
+
                 m_textMeshPro.text = string.Empty;
                 m_textMeshPro.isTextObjectScaleStatic = IsTextObjectScaleStatic;
 

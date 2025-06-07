@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 namespace TMPro.Examples
 {
-    
     public class TMP_UiFrameRateCounter : MonoBehaviour
     {
         public float UpdateInterval = 5.0f;
@@ -32,29 +30,27 @@ namespace TMPro.Examples
 
             GameObject frameCounter = new GameObject("Frame Counter");
             m_frameCounter_transform = frameCounter.AddComponent<RectTransform>();
-
             m_frameCounter_transform.SetParent(this.transform, false);
 
             m_TextMeshPro = frameCounter.AddComponent<TextMeshProUGUI>();
             m_TextMeshPro.font = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
             m_TextMeshPro.fontSharedMaterial = Resources.Load<Material>("Fonts & Materials/LiberationSans SDF - Overlay");
 
+            // 🔧 수정된 부분
             m_TextMeshPro.enableWordWrapping = false;
-            m_TextMeshPro.fontSize = 36;
 
+            m_TextMeshPro.fontSize = 36;
             m_TextMeshPro.isOverlay = true;
 
             Set_FrameCounter_Position(AnchorPosition);
             last_AnchorPosition = AnchorPosition;
         }
 
-
         void Start()
         {
             m_LastInterval = Time.realtimeSinceStartup;
             m_Frames = 0;
         }
-
 
         void Update()
         {
@@ -68,14 +64,13 @@ namespace TMPro.Examples
 
             if (timeNow > m_LastInterval + UpdateInterval)
             {
-                // display two fractional digits (f2 format)
                 float fps = m_Frames / (timeNow - m_LastInterval);
                 float ms = 1000.0f / Mathf.Max(fps, 0.00001f);
 
-                if (fps < 30)
-                    htmlColorTag = "<color=yellow>";
-                else if (fps < 10)
+                if (fps < 10)
                     htmlColorTag = "<color=red>";
+                else if (fps < 30)
+                    htmlColorTag = "<color=yellow>";
                 else
                     htmlColorTag = "<color=green>";
 
@@ -85,7 +80,6 @@ namespace TMPro.Examples
                 m_LastInterval = timeNow;
             }
         }
-
 
         void Set_FrameCounter_Position(FpsCounterAnchorPositions anchor_position)
         {
