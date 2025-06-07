@@ -67,33 +67,38 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void UpdateCursorLock()
         {
-            //if the user set "lockCursor" we check & properly lock the cursos
-            if (lockCursor)
+            // 커서 락 여부가 true일 때만 내부 업데이트
+            if (lockCursor && m_cursorIsLocked)
                 InternalLockUpdate();
         }
 
         private void InternalLockUpdate()
         {
-            if(Input.GetKeyUp(KeyCode.Escape))
+            if (Input.GetKeyUp(KeyCode.Escape))
             {
                 m_cursorIsLocked = false;
             }
-            else if(Input.GetMouseButtonUp(0))
+
+            // 마우스 클릭해도 다시 Lock 안 걸리게 주석 처리 또는 삭제
+            /*
+            else if (Input.GetMouseButtonUp(0))
             {
                 m_cursorIsLocked = true;
             }
+            */
 
             if (m_cursorIsLocked)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
-            else if (!m_cursorIsLocked)
+            else
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
         }
+
 
         Quaternion ClampRotationAroundXAxis(Quaternion q)
         {

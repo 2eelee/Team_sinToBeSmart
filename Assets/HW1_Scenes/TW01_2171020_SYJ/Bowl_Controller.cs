@@ -9,7 +9,7 @@ public class Bowl_Controller : MonoBehaviour
     { 
         if (other.tag == "Item")
         {
-            UI_Controller.GetComponent<D06_UI_Controller>().Display_PutCounts();
+            UI_Controller.GetComponent<UI_Controller>().Display_PutCounts();
             Destroy(other.gameObject);
         }
     }
