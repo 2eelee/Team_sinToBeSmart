@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadScene : MonoBehaviour
+public class LoadSceneManager : MonoBehaviour
 {
     public enum SceneList
     {
@@ -16,21 +14,21 @@ public class LoadScene : MonoBehaviour
         Onboarding
     }
 
-    // PC¿¡¼­¸¸ µ¹¾Æ°¡´Â ±¸ ÄÚµå
+    // PCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Úµï¿½
     public void OnClick_LoadScene(Object SceneObject)
     {
-        Debug.Log("touch");
-        SceneManager.LoadScene(SceneObject.name, LoadSceneMode.Single);
+        Debug.Log("Loading scene: " + sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
-    // Enum ¹öÀü (ÄÚµå ³»¿¡¼­ È£Ãâ °¡´ÉÇÏÁö¸¸ Button¿¡¼± ¿¬°á ºÒ°¡)
+    // Enum ï¿½ï¿½ï¿½ï¿½ (ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Buttonï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½)
     public void LoadSceneByName(SceneList target)
     {
         Debug.Log($"Loading scene (enum): {target}");
         SceneManager.LoadScene(target.ToString());
     }
 
-    // ¹®ÀÚ¿­ ¹öÀü (¹öÆ°¿¡¼­ Á÷Á¢ ¿¬°á °¡´É)
+    // ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     public void LoadSceneByName_String(string sceneName)
     {
         Debug.Log($"Loading scene (string): {sceneName}");
