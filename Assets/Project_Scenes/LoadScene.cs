@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadScene : MonoBehaviour
+public class LoadSceneManager : MonoBehaviour
 {
-    
-    public void OnClick_LoadScene(Object SceneObject)
+    public void LoadSceneByName(string sceneName)
     {
-        Debug.Log("touch");
-        SceneManager.LoadScene(SceneObject.name, LoadSceneMode.Single);
+        Debug.Log("Loading scene: " + sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 }
