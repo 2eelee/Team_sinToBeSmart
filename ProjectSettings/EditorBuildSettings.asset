@@ -5,45 +5,27 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/HW1_Scenes/TW01_2170061_YJM/TW01_2170061_YJM.unity
-    guid: 4cc3c1bfb367af543a48b46a0460c682
-  - enabled: 0
-    path: Assets/HW1_Scenes/TW01_2144026_CHE/D13_2144026_CHE.unity
-    guid: 5f95e849ecdab9f46b42e94af0b43f2f
-  - enabled: 0
-    path: Assets/HW1_Scenes/TW01_2171020_SYJ/SYJ_TW.unity
-    guid: cef71282d0cb9784e85414393661be87
-  - enabled: 0
-    path: Assets/HW1_Scenes/TW01_2271041_YHS/TW01_2271041_YHS.unity
-    guid: e8a9194ef49ee6b4a832ff72c4e2b15f
   - enabled: 1
     path: Assets/Project_Scenes/Onboarding/Onboarding.unity
     guid: 0fae1115b0f43a9409d3e636a9497d76
   - enabled: 1
+    path: Assets/Project_Scenes/Senior/FindSeniorScene.unity
+    guid: e111b852b7a427b4eb1468533f5c208d
+  - enabled: 1
+    path: Assets/Scenes/Scene_Mission_1.unity
+    guid: f4cbe0251b877b24c8795a029403a550
+  - enabled: 1
+    path: Assets/Scenes/Scene_Mission_2.unity
+    guid: a2e7296db0932704a96e9bd38126d008
+  - enabled: 1
     path: Assets/Project_Scenes/Senior/DeliverToSeniorScene.unity
     guid: f4d66ef800644a04295b56a8336a8105
-  - enabled: 0
-    path: Assets/HW1_Scenes/TW01_Collab Scene.unity
-    guid: f9c1de186e33b0047bef93e22a7e0c1c
   - enabled: 1
     path: Assets/Project_Scenes/Status/Status1.unity
     guid: b7da7b6d24c7ea645bdd0d5e5c92d96c
   - enabled: 1
     path: Assets/Project_Scenes/Settings/Setting_YHS.unity
     guid: b9d8b30708e5eb847a4cfde3d72bbd1d
-  - enabled: 0
-    path: Assets/Project_Scenes/Find/Scene_Mission_1.unity
-    guid: 05c6e60e57c2abb4aaba2d27b9dabb74
-  - enabled: 1
-    path: Assets/Project_Scenes/Senior/FindSeniorScene.unity
-    guid: e111b852b7a427b4eb1468533f5c208d
-  - enabled: 1
-    path: Assets/Scenes/Scene_Mission_2.unity
-    guid: a2e7296db0932704a96e9bd38126d008
-  - enabled: 1
-    path: Assets/Scenes/Scene_Mission_1.unity
-    guid: f4cbe0251b877b24c8795a029403a550
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 120fae248ef170041a14a5c0e7059dd1, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: fe80e1fd05c7b5c48993b924bd94abf5, type: 2}
