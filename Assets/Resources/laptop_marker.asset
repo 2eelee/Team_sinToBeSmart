@@ -23,7 +23,7 @@ MonoBehaviour:
     m_SerializedTextureGuid:
       m_GuidLow: 15678409991301686481
       m_GuidHigh: 6669159049256381819
-    m_Size: {x: 0.1, y: 0.1415126}
+    m_Size: {x: 0.21, y: 0.29717645}
     m_SpecifySize: 1
     m_Name: laptop_marker
     m_Texture: {fileID: 0}

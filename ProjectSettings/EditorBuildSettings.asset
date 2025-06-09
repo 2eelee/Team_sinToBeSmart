@@ -12,11 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Senior/FindSeniorScene.unity
     guid: e111b852b7a427b4eb1468533f5c208d
   - enabled: 1
-    path: Assets/Scenes/Find/Scene_Mission_2.unity
-    guid: a2e7296db0932704a96e9bd38126d008
-  - enabled: 1
     path: Assets/Scenes/Find/Scene_Mission_1.unity
     guid: f4cbe0251b877b24c8795a029403a550
+  - enabled: 1
+    path: Assets/Scenes/Find/Scene_Mission_2.unity
+    guid: a2e7296db0932704a96e9bd38126d008
   - enabled: 1
     path: Assets/Scenes/Senior/DeliverToSeniorScene.unity
     guid: f4d66ef800644a04295b56a8336a8105

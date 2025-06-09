@@ -13,7 +13,9 @@ public class LaptopSpawner : MonoBehaviour
 
     private ARTrackedImageManager trackedImageManager;
     private Dictionary<string, GameObject> spawnedObjects = new Dictionary<string, GameObject>();
-    private HashSet<string> collectedIds = new HashSet<string>();  // 이미 획득한 ID 저장
+
+    private const string markerName = "laptop_marker";
+    private const string prefsKey = "Laptop";
 
     void Awake()
     {
@@ -22,68 +24,88 @@ public class LaptopSpawner : MonoBehaviour
 
     void Start()
     {
-        panelNext.SetActive(false);
-        nextButton.SetActive(false);
+        if (PlayerPrefs.GetInt(prefsKey, 0) == 1)
+        {
+            ShowCollectedUI();
+        }
+        else
+        {
+            ShowDefaultUI();
+        }
     }
 
     void Update()
     {
-        // 1. 이미지 인식 처리
+        if (PlayerPrefs.GetInt(prefsKey, 0) == 1)
+            return;
+
         foreach (ARTrackedImage trackedImage in trackedImageManager.trackables)
         {
-            string id = trackedImage.trackableId.ToString();
-
-            // 이미 획득한 포스터는 무시
-            if (collectedIds.Contains(id))
+            if (trackedImage.referenceImage.name != markerName)
                 continue;
 
-            if (trackedImage.referenceImage.name == "laptop_marker")
+            // 마커가 새로 트래킹되었을 때만 생성
+            if (trackedImage.trackingState == TrackingState.Tracking)
             {
-                if (trackedImage.trackingState == TrackingState.Tracking && !spawnedObjects.ContainsKey(id))
+                if (!spawnedObjects.ContainsKey(markerName))
                 {
-                    Vector3 pos = trackedImage.transform.position + Vector3.up * 0.05f;
-                    Quaternion rot = trackedImage.transform.rotation * Quaternion.Euler(90, 0, 0); // 노트북 뒤집힘 보정
-
-                    GameObject spawned = Instantiate(laptopPrefab, pos, rot);
-                    spawnedObjects[id] = spawned;
+                    GameObject spawned = Instantiate(laptopPrefab);
+                    spawned.tag = "Collectable";
+                    spawnedObjects[markerName] = spawned;
                 }
 
-                if (trackedImage.trackingState == TrackingState.None && spawnedObjects.ContainsKey(id))
-                {
-                    Destroy(spawnedObjects[id]);
-                    spawnedObjects.Remove(id);
+                var obj = spawnedObjects[markerName];
+                obj.transform.SetPositionAndRotation(
+                    trackedImage.transform.position + Vector3.up * 0.05f,
+                    trackedImage.transform.rotation * Quaternion.Euler(90, 0, 0)
+                );
+            }
 
-                    panelNext.SetActive(false);
-                    nextButton.SetActive(false);
-                    panelIntro.SetActive(true);
-                }
+            if (trackedImage.trackingState == TrackingState.None && spawnedObjects.ContainsKey(markerName))
+            {
+                Destroy(spawnedObjects[markerName]);
+                spawnedObjects.Remove(markerName);
+                ShowDefaultUI();
             }
         }
 
-        // 2. 터치 시 오브젝트 선택 처리 (획득)
+        // 터치 시 수집
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            Touch touch = Input.GetTouch(0);
-            Ray ray = Camera.main.ScreenPointToRay(touch.position);
+            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                foreach (var kvp in spawnedObjects)
-                {
-                    if (hit.collider.gameObject == kvp.Value)
-                    {
-                        // 획득 처리
-                        Destroy(kvp.Value);
-                        spawnedObjects.Remove(kvp.Key);
-                        collectedIds.Add(kvp.Key); // 재생성 방지용으로 ID 저장
+                Debug.Log("Ray hit: " + hit.collider.gameObject.name);
 
-                        panelIntro.SetActive(false);
-                        panelNext.SetActive(true);
-                        nextButton.SetActive(true);
-                        break;
+                if (hit.collider.CompareTag("Collectable"))
+                {
+                    GameObject root = hit.collider.transform.root.gameObject;
+
+                    if (spawnedObjects.ContainsKey(markerName) && spawnedObjects[markerName] == root)
+                    {
+                        Destroy(spawnedObjects[markerName]);
+                        spawnedObjects.Remove(markerName);
+                        PlayerPrefs.SetInt(prefsKey, 1);
+                        PlayerPrefs.Save();
+                        ShowCollectedUI();
                     }
                 }
             }
         }
+    }
+
+    void ShowCollectedUI()
+    {
+        panelIntro?.SetActive(false);
+        panelNext?.SetActive(true);
+        nextButton?.SetActive(true);
+    }
+
+    void ShowDefaultUI()
+    {
+        panelIntro?.SetActive(true);
+        panelNext?.SetActive(false);
+        nextButton?.SetActive(false);
     }
 }

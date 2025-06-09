@@ -23,7 +23,7 @@ MonoBehaviour:
     m_SerializedTextureGuid:
       m_GuidLow: 11215323388197540056
       m_GuidHigh: 3297296164964490233
-    m_Size: {x: 0.1, y: 0.1415126}
+    m_Size: {x: 0.21, y: 0.29717645}
     m_SpecifySize: 1
     m_Name: energy_drink_marker
     m_Texture: {fileID: 0}

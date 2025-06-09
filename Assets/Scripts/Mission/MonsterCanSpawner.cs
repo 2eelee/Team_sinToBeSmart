@@ -3,13 +3,13 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System.Collections.Generic;
 
-public class MonsterCanSpawner : MonoBehaviour
+public class MonsterSpawner : MonoBehaviour
 {
-    public GameObject monsterCanPrefab;
+    public GameObject monsterPrefab;
 
-    public GameObject panelIntro;     // Panel_MonsterCanIntro
-    public GameObject panelNext;      // Panel_MonsterCanNext
-    public GameObject nextButton;     // NextButton
+    public GameObject panelIntro;     // 초기 안내 UI
+    public GameObject panelNext;      // 수집 완료 UI
+    public GameObject nextButton;     // 다음 버튼
 
     private ARTrackedImageManager trackedImageManager;
     private Dictionary<string, GameObject> spawnedObjects = new Dictionary<string, GameObject>();
@@ -22,8 +22,8 @@ public class MonsterCanSpawner : MonoBehaviour
 
     void Start()
     {
-        // 이전에 수집한 상태라면 UI만 보여주고 끝
-        if (PlayerPrefs.GetInt("MonsterCan", 0) == 1)
+        // 이전에 수집한 상태라면 UI만 표시
+        if (PlayerPrefs.GetInt("Monster", 0) == 1)
         {
             collectedIds.Add("energy_drink_marker");
             ShowCollectedUI();
@@ -36,10 +36,11 @@ public class MonsterCanSpawner : MonoBehaviour
 
     void Update()
     {
-        // 이미 수집 완료된 경우는 아무 것도 하지 않음
-        if (PlayerPrefs.GetInt("MonsterCan", 0) == 1)
+        // 수집 완료되었으면 더 이상 감지 및 수집 불필요
+        if (PlayerPrefs.GetInt("Monster", 0) == 1)
             return;
 
+        // 이미지 추적 및 캔 위치 업데이트
         foreach (ARTrackedImage trackedImage in trackedImageManager.trackables)
         {
             if (trackedImage.referenceImage.name != "energy_drink_marker")
@@ -47,20 +48,23 @@ public class MonsterCanSpawner : MonoBehaviour
 
             string id = trackedImage.trackableId.ToString();
 
-            if (collectedIds.Contains(id))
-                continue;
-
-            if (trackedImage.trackingState == TrackingState.Tracking && !spawnedObjects.ContainsKey(id))
+            // 오브젝트가 없으면 생성
+            if (trackedImage.trackingState == TrackingState.Tracking)
             {
-                Vector3 spawnPos = trackedImage.transform.position + Vector3.up * 0.05f;
-                Quaternion spawnRot = trackedImage.transform.rotation * Quaternion.Euler(90, 0, 0);
+                if (!spawnedObjects.ContainsKey(id))
+                {
+                    GameObject spawned = Instantiate(monsterPrefab);
+                    spawned.tag = "Collectable";
+                    spawnedObjects[id] = spawned;
+                }
 
-                GameObject spawned = Instantiate(monsterCanPrefab, spawnPos, spawnRot);
-                spawned.tag = "Collectable";
-
-                spawnedObjects[id] = spawned;
+                // 위치 계속 업데이트
+                GameObject obj = spawnedObjects[id];
+                obj.transform.position = trackedImage.transform.position + Vector3.up * 0.05f;
+                obj.transform.rotation = trackedImage.transform.rotation * Quaternion.Euler(90, 0, 0);
             }
 
+            // 트래킹이 끊기면 오브젝트 제거
             if (trackedImage.trackingState == TrackingState.None && spawnedObjects.ContainsKey(id))
             {
                 Destroy(spawnedObjects[id]);
@@ -69,7 +73,7 @@ public class MonsterCanSpawner : MonoBehaviour
             }
         }
 
-        // 터치로 수집
+        // 터치 수집 처리
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             Touch touch = Input.GetTouch(0);
@@ -77,25 +81,31 @@ public class MonsterCanSpawner : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
+                Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+
                 if (hit.collider.CompareTag("Collectable"))
                 {
                     GameObject root = hit.collider.transform.root.gameObject;
+                    string toRemoveKey = null;
 
                     foreach (var kvp in spawnedObjects)
                     {
                         if (kvp.Value == root)
                         {
                             Destroy(kvp.Value);
-                            spawnedObjects.Remove(kvp.Key);
+                            toRemoveKey = kvp.Key;
                             collectedIds.Add(kvp.Key);
 
-                            PlayerPrefs.SetInt("MonsterCan", 1);
+                            PlayerPrefs.SetInt("Monster", 1);
                             PlayerPrefs.Save();
 
                             ShowCollectedUI();
                             break;
                         }
                     }
+
+                    if (toRemoveKey != null)
+                        spawnedObjects.Remove(toRemoveKey);
                 }
             }
         }
